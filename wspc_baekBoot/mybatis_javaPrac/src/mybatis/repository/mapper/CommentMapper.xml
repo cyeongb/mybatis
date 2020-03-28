@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="mybatis.repository.mapper.CommentMapper">
+<mapper namespace="mybatis_javaPrac.mybatis.repository.mapper.CommentMapper">
 <cache />
 
 <sql id="BaseColumns">
@@ -12,14 +12,17 @@
 	reg_date AS regDate
 </sql>
 
-<select id="selectCommentByPrimaryKey" parameterTyp"long" resultType="mybatis.model.Comment">
+<select id="selectCommentByPrimaryKey" parameterType="long" resultType="mybatis.model.Comment">
 	select
-		<include refid="BaseColumns" />
+		comment_no AS commentNo,
+		user_id AS userId,
+		comment_content AS commentContent,
+		reg_date AS regDate
 	from comment
 	where comment_no = #{commentNo}
 </select>
 
-<select id="selectCommentByCondition" parameterType="hashmap" resultType="mybatis.comment.Comment">
+<select id="selectCommentByCondition" parameterType="hashmap" resultType="mybatis.model.Comment">
 	select
 		comment_no AS commentNo,
 		user_id AS userId,
@@ -49,7 +52,7 @@
 	where comment_no = #{commentNo}
 </delete>
 
-
+</mapper>
 
 
 
