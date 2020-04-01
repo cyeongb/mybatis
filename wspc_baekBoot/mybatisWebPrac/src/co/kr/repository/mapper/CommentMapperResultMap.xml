@@ -1,0 +1,19 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatisWebPrac.co.kr.repository.mapper.CommentMapperResultMap">
+<resultMap id="BaseResultMap" type="mybatisWebPrac.co.kr.model.Comment">
+	<id column="comment_no" jdbcType="BIGINT" property="commentNo" />
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
+			<result column="reg_date" jdbcType="DATETIME" property="commentNo" />
+				<result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+</resultMap>
+<cache />
+
+<select id="selectCommentByPrimaryKey"
+
+
+
+
+
+</mapper>								

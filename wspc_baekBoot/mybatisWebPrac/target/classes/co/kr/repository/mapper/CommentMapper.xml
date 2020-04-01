@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- xml 만 사용하기 -->
+
+<mapper namespace="mybatisWebPrac.co.kr.repository.mapper.CommentMapper">
+<cache />
+
+<sql id="BaseColumns">
+	comment_no AS commentNo,
+	user_id AS userId,
+	comment_content AS commentConent,
+	reg_date AS regDate
+</sql>
+
+<!--   xml 과 인터페이스 함께 사용하기
+	xml매핑 구문은 그대로 작성하고 그에 대응하는 매퍼 인터페이스를 만든다.
+==> 매퍼 인터페이스의 메서드에 어노테이션으로 SQL을 선언  안하면 된다.
+==> XML매핑 구문을 어노테이션의 매핑 구문으로 변경하는 규칙들을 맞춰야 한다.
+==> XML매핑 구문의 namespace와 매퍼 인터페이스의 이름과 패키지가 동일해야 한다.
+==> 메서드 이름과 XML매핑 구문의 아이디가 같고 반환 타입과 파라미터 타입도 동일해야 한다.
+    -->
+
+<!-- <select id="selectCommentByPrimaryKey" parameterType="long" resultMap="constructorResultMap"> -->
+
+<select id="selectCommentByPrimaryKey" parameterType="long" resultType="Comment">
+	select
+		comment_no  AS commentNo,
+		user_id AS userId,
+		comment_content AS commentContent,
+		reg_date AS regDate 
+	where comment_no = #{commentNo}
+</select>
+
+
+
+<select id="selectCommentByCondition" parameterType="hashmap" resultType="Comment">
+	select
+		comment_no AS commentNo,
+		user_id AS userId,
+		comment_content AS commentContent,
+		reg_date AS regDate
+	from comment
+	<!-- <where> -->
+		<if test="commentNo != null">
+	where	comment_no = #{commentNo}
+		</if> 
+	<!-- </where> -->
+</select>
+
+
+<select id="selectCommentByConditionIf" parameterType="hashmap" resultType="Comment">
+	select
+		comment_no AS commentNo,
+		user_id AS userId,
+		comment_content AS commentContent,
+		reg_date AS regDate
+	from comment
+	 <where> <!--  where 엘리먼트 : 하위 엘리먼트에 생성하는 내용이 있으면 자동으로  where을 붙여준다. -->
+		<if test="commentNo != null">
+		   comment_no = #{commentNo}
+		</if> 
+		
+		<if test="user != null and user.userId !=null">
+		   and user_id = #{user.user.Id}
+		</if>
+		
+	 </where> 
+</select>
+
+
+<insert id="insertComment" parameterType="mybatis.model.Comment">
+	insert into comment(comment_no , user_id, comment_content, reg_date)
+	values(#{commentNo},#{userId},#{commentContent},#{regDate})
+</insert>
+
+
+<update id="updateComment" parameterType="mybatis.model.Comment">
+	update comment set comment_content = #{commentContent}
+	where comment_no = #{commentNo}
+</update>
+
+<delete id="deleteComment" parameterType="long">
+	delete from comment
+	where comment_no = #{commentNo}
+</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
